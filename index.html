@@ -4,40 +4,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kivipuko & Mwakridia ❤️ Birthday Celebration</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 /* Global Styles */
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif;}
 body, html {
     width:100%;
     height:100%;
-    background: linear-gradient(135deg, #e0eafc, #cfdef3);
-    overflow-x: hidden;
-    position: relative;
-    color: #333;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    transition:background 2s;
+    overflow:hidden;
+    position:relative;
+    color:#fff;
 }
 
-/* Floating blurred circles in background */
-.bg-circle {
-    position:absolute;
-    border-radius:50%;
-    background: rgba(255,255,255,0.15);
-    filter: blur(40px);
-    width: 100px;
-    height: 100px;
-    animation: floatCircle 15s linear infinite;
+/* Background slideshow images */
+.bg-slide {
+    position:fixed;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-2;
+    opacity:0;
+    transition:opacity 1s ease-in-out;
 }
-.bg-circle:nth-child(1){left:10%; animation-duration:18s;}
-.bg-circle:nth-child(2){left:70%; top:20%; animation-duration:20s;}
-.bg-circle:nth-child(3){left:40%; top:50%; animation-duration:22s;}
 
-@keyframes floatCircle {
-    0% {transform: translateY(100vh);}
-    100% {transform: translateY(-50vh);}
+/* Dark overlay to make text readable */
+#overlay {
+    position:fixed;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.35);
+    z-index:-1;
 }
 
 /* Intro Overlay */
@@ -68,67 +66,42 @@ body, html {
     background:white;
     color:#6a5acd;
     font-weight:bold;
+    font-size:1rem;
     box-shadow:0 5px 15px rgba(0,0,0,0.2);
 }
 
 /* Fade out overlay */
 #intro.fade-out {opacity:0; pointer-events:none; transition:opacity 1s ease;}
 
-/* Main Container */
-.container {
-    position: relative;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:flex-start;
-    padding:20px;
-    max-width: 500px;
-    width:90vw;
-    margin:auto;
+/* Message Overlay */
+#messageOverlay {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
     text-align:center;
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(15px);
-    border-radius: 25px;
-    box-shadow: 0 15px 50px rgba(0,0,0,0.25);
-    opacity:0;
-    transition: opacity 1s;
-    overflow-y:auto;
-    max-height:90vh;
-}
-.container.show {opacity:1;}
-
-/* Birthday Message */
-#longMessage {
-    opacity:0;
-    transition: opacity 2s;
+    max-width:90vw;
+    background: rgba(0,0,0,0.4);
+    padding:25px;
+    border-radius:20px;
     font-size:1rem;
-    line-height:1.5;
-    margin-bottom:20px;
-    color:#222;
+    line-height:1.6;
+    z-index:10;
+    color:#fff;
+    box-shadow:0 10px 40px rgba(0,0,0,0.4);
 }
 
-/* Slideshow Container */
-.slideshow-container {
-    position: relative;
-    width: 90vw;
-    max-width: 350px;
-    height: 90vw;
-    max-height: 350px;
-    margin-bottom: 20px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 20px;
-    border: 4px solid #fff;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-    overflow: hidden;
-}
-#slideshow {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    top:0; left:0;
-    opacity:0;
-    transition: opacity 1s;
+/* Button for special message */
+button#specialButton {
+    margin-top:20px;
+    padding:12px 25px;
+    border-radius:20px;
+    border:none;
+    background:#fff;
+    color:#6a5acd;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
 
 /* Special message */
@@ -138,28 +111,22 @@ body, html {
     max-height:0;
     overflow:hidden;
     transition: opacity 1s, max-height 1s ease;
+    font-size:0.95rem;
 }
 .hidden-message.show {
     opacity:1;
-    max-height: 500px;
+    max-height:600px;
 }
 
-/* Candle */
-#candle {position:relative; width:40px; height:120px; background:#222; border-radius:10px; margin-top:30px; box-shadow:0 5px 20px rgba(0,0,0,0.5);}
-.flame {position:absolute; top:-25px; left:50%; transform:translateX(-50%); width:20px; height:30px; background:orange; border-radius:50% 50% 20% 20%; filter:blur(3px); animation:flameFlicker 1s infinite; cursor:pointer;}
-
-/* Animations */
-@keyframes flameFlicker {0%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-52%) scale(1.1);}100%{transform:translateX(-50%) scale(1);}}
+/* Floating hearts */
 .heart {position:absolute; bottom:-10px; font-size:20px; animation:rise 6s linear infinite; opacity:0.7; transform-origin:center;}
 @keyframes rise {to{transform:translateY(-110vh) rotate(360deg);opacity:0;}}
 </style>
 </head>
 <body>
 
-<!-- Background circles -->
-<div class="bg-circle"></div>
-<div class="bg-circle"></div>
-<div class="bg-circle"></div>
+<!-- Background slides -->
+<div id="overlay"></div>
 
 <!-- Intro Overlay -->
 <div id="intro">
@@ -169,10 +136,9 @@ body, html {
     <button onclick="startCelebration()">Proceed to Celebration 🎉</button>
 </div>
 
-<!-- Main Container -->
-<div class="container" id="main">
-    <div id="longMessage">
-        <p>
+<!-- Message Overlay -->
+<div id="messageOverlay">
+    <p>
         Hello, loved ones… the special people of the world.<br>
         Today is a celebration of those who are special — special to Mummy, special to Babuu, special to Mr. Billy, and special to Honourable Bradley himself.<br>
         Breathe in and remind every cell in your body that you are alive! 😍❤️<br>
@@ -181,48 +147,55 @@ body, html {
         Together, you can take on the world. Give yourselves the chance to breathe, grow, and enjoy life.<br>
         Kivipuko and Mwakridia… muache kula sana… kwanza Kivipuko afunge momu kukelala… bahaha 😅<br>
         Love you both forever! ❤️
-        </p>
-    </div>
-
-    <!-- Slideshow -->
-    <div class="slideshow-container">
-        <img id="slideshow" src="mumimages/mum1.jpg.jpeg" alt="Birthday">
-    </div>
-
-    <!-- Candle -->
-    <div id="candle">
-        <div class="flame" id="flame"></div>
-    </div>
-
-    <button onclick="revealMessage()">Click for a Special Message</button>
-
+    </p>
+    <button id="specialButton" onclick="revealMessage()">Click for a Special Message</button>
     <div class="hidden-message" id="special">
         <p>Thank you for your love, guidance, and faith. May this year be full of happiness, growth, and countless blessings. Love you both forever. ❤️</p>
     </div>
-
-    <!-- Bible Verse -->
-    <div id="verse"></div>
 </div>
 
-<audio id="bgMusic">
+<!-- Audio -->
+<audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-// Intro Overlay
+// Slideshow background
+const pics = [];
+for(let i=1;i<=76;i++){ pics.push(`mumimages/mum${i}.jpg.jpeg`);}
+let current=0;
+const bgImages = [];
+pics.forEach(src=>{
+    const img = document.createElement("img");
+    img.src = src;
+    img.classList.add("bg-slide");
+    document.body.appendChild(img);
+    bgImages.push(img);
+});
+bgImages[0].style.opacity = 1;
+
+// Slideshow interval (faster now)
+setInterval(()=>{
+    const next = (current+1) % bgImages.length;
+    bgImages[current].style.opacity = 0;
+    bgImages[next].style.opacity = 1;
+    current = next;
+},3500); // 3.5 seconds per image
+
+// Intro overlay
 function startCelebration(){
     document.getElementById('intro').classList.add('fade-out');
     setTimeout(()=>{
-        document.getElementById('main').classList.add('show');
-        document.getElementById('longMessage').style.opacity = 1;
-        document.getElementById('bgMusic').play(); // music starts on proceed
+        document.getElementById('bgMusic').play();
     },1000);
 }
 
-// Reveal Hidden Message
-function revealMessage(){document.getElementById("special").classList.add("show");}
+// Special message reveal
+function revealMessage(){
+    document.getElementById("special").classList.add("show");
+}
 
-// Floating Hearts
+// Floating hearts
 setInterval(() => {
     const heart = document.createElement("div");
     heart.classList.add("heart");
@@ -232,48 +205,7 @@ setInterval(() => {
     document.body.appendChild(heart);
     setTimeout(()=>heart.remove(),6000);
 },600);
-
-// Bible Verse Animation
-const verses = [
-    "Proverbs 31:25 - She is clothed with strength and dignity, and she laughs without fear of the future.",
-    "Philippians 4:13 - I can do all things through Christ who strengthens me.",
-    "Psalm 28:7 - The Lord is my strength and my shield; my heart trusts in him, and I am helped.",
-    "1 Corinthians 13:4 - Love is patient, love is kind; it does not envy or boast; it is not proud."
-];
-let verseIndex=0;
-function showVerse(){
-    const v=document.getElementById("verse");
-    v.style.opacity=0;
-    setTimeout(()=>{
-        v.innerHTML=verses[verseIndex];
-        v.style.opacity=1;
-        verseIndex=(verseIndex+1)%verses.length;
-    },1000);
-}
-setInterval(showVerse,6000);
-showVerse();
-
-// Slideshow
-const pics=[];
-for(let j=1;j<=76;j++){
-    pics.push(`mumimages/mum${j}.jpg.jpeg`);
-}
-let current=0;
-const slide=document.getElementById("slideshow");
-slide.style.opacity=1;
-setInterval(()=>{
-    const next=(current+1)%pics.length;
-    const fadeOut=setInterval(()=>{
-        if(slide.style.opacity>0){slide.style.opacity-=0.05;}else{
-            clearInterval(fadeOut);
-            slide.src=pics[next];
-            const fadeIn=setInterval(()=>{
-                if(slide.style.opacity<1){slide.style.opacity=parseFloat(slide.style.opacity)+0.05;}else{clearInterval(fadeIn);}
-            },30);
-        }
-    },30);
-    current=next;
-},5000);
 </script>
+
 </body>
 </html>
