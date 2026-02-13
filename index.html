@@ -4,184 +4,121 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kivipuko & Mwakridia ❤️ Birthday Celebration</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-
-body,html{
-width:100%;
-height:100%;
-overflow:hidden;
-background:linear-gradient(135deg,#e0eafc,#cfdef3);
-color:#333;
-display:flex;
-justify-content:center;
-align-items:center;
-transition:background 2s;
+/* Global Styles */
+* {margin:0;padding:0;box-sizing:border-box;}
+body, html {
+    width:100%; height:100%; overflow:hidden;
+    font-family:'Playfair Display', serif;
+    background:#111;
+    color:#fff;
 }
 
-/* Soft glowing vignette */
-body::after{
-content:"";
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-pointer-events:none;
-box-shadow:inset 0 0 120px rgba(0,0,0,0.4);
+/* Background slideshow container */
+#bg-slideshow {
+    position:fixed;
+    top:0; left:0; width:100%; height:100%;
+    z-index:-100;
+    overflow:hidden;
+}
+.bg-slide {
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:opacity 1s ease;
+    filter: brightness(0.5);
+    transform: scale(1.05);
 }
 
-/* Buttons */
-button{cursor:pointer;transition:0.3s;}
-button:active{transform:scale(0.95);}
+/* Intro Overlay */
+#intro {
+    position:fixed; top:0; left:0; width:100%; height:100%;
+    background:rgba(0,0,0,0.85);
+    display:flex; flex-direction:column;
+    justify-content:center; align-items:center;
+    text-align:center; padding:20px; z-index:200;
+    overflow-y:auto;
+}
+#intro.fade-out {opacity:0; pointer-events:none; transition:opacity 1s ease;}
+#intro h1 {font-size:3rem; margin-bottom:15px; color:#fff; text-shadow:0 0 15px rgba(255,255,255,0.7);}
+#intro p {font-size:1.2rem; margin:8px 0; line-height:1.6;}
+#intro button {
+    margin-top:20px; padding:12px 30px;
+    border-radius:25px; border:none;
+    background:#fff; color:#6a5acd; font-weight:bold;
+    cursor:pointer;
+    transition:0.2s;
+}
+#intro button:active {transform:scale(0.95);}
 
-/* Intro */
-#intro{
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:rgba(0,0,0,0.95);
-color:#fff;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-z-index:200;
-padding:20px;
-text-align:center;
-overflow-y:auto;
+/* Main container text overlay */
+.container {
+    position:fixed; top:0; left:0;
+    width:100%; height:100%;
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    text-align:center; padding:20px;
+    color:white;
+    pointer-events:none;
+}
+.container.show {pointer-events:auto;}
+
+/* Slideshow frame */
+.slideshow-container {
+    width:90vw; max-width:400px;
+    height:90vw; max-height:400px;
+    overflow:hidden; border-radius:20px;
+    margin-bottom:20px; position:relative;
+}
+#slideshow {
+    width:100%; height:100%;
+    object-fit:cover;
+    border-radius:20px;
+    box-shadow:0 10px 40px rgba(0,0,0,0.5);
+    transition:opacity 0.8s ease;
 }
 
-#intro.fade-out{opacity:0;pointer-events:none;transition:opacity 1s ease;}
-
-#intro button{
-margin-top:20px;
-padding:12px 30px;
-border-radius:25px;
-border:none;
-background:white;
-color:#6a5acd;
-font-weight:bold;
+/* Text overlay */
+.overlay-text {
+    position:absolute; top:0; left:0; width:100%; height:100%;
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    padding:20px;
+    backdrop-filter: blur(3px);
+    text-shadow: 0 0 15px rgba(0,0,0,0.7);
+    font-size:1.1rem; line-height:1.6; overflow-y:auto;
+    max-height:100%;
 }
 
-/* Loading */
-#loading{
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:rgba(0,0,0,0.9);
-color:white;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-z-index:300;
-font-size:1.5rem;
-}
+/* Special message */
+#special {opacity:0; transition:opacity 1s; margin-top:10px;}
+#special.show {opacity:1;}
 
-/* Main container */
-.container{
-position:relative;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-padding:40px;
-max-width:800px;
-margin:auto;
-text-align:center;
-background:rgba(255,255,255,0.15);
-backdrop-filter:blur(18px);
-border-radius:30px;
-box-shadow:0 20px 60px rgba(0,0,0,0.25);
-opacity:0;
-transition:opacity 2s;
-}
-.container.show{opacity:1;}
-
-h1.main-title{font-size:2.5rem;margin-bottom:10px;}
-
-.slideshow-container{
-position:relative;
-width:250px;height:250px;
-margin-bottom:20px;
-}
-
-#slideshow{
-width:100%;height:100%;
-border-radius:50%;
-border:4px solid white;
-box-shadow:0 10px 40px rgba(0,0,0,0.4);
-object-fit:cover;
-position:absolute;
-top:0;left:0;
-opacity:1;
-transition:opacity 1s ease;
-}
-
-#slideshow-glow{
-position:absolute;
-top:-10px;left:-10px;
-width:270px;height:270px;
-border-radius:50%;
-box-shadow:0 0 80px 15px rgba(255,255,255,0.4);
-pointer-events:none;
-z-index:-1;
-}
-
-p{line-height:1.6;margin:10px auto;max-width:700px;font-size:1.1rem;}
-
-.hidden-message{margin-top:20px;opacity:0;transition:opacity 1s;}
-.hidden-message.show{opacity:1;}
-
-#verse{margin-top:20px;font-style:italic;font-size:1.1rem;opacity:0;transition:opacity 2s;}
+/* Bible verse */
+#verse {font-style:italic; font-size:1.1rem; margin:10px 0; opacity:0; transition:opacity 1s;}
 
 /* Candle */
-#candle{
-position:relative;
-width:40px;height:120px;
-background:#222;
-border-radius:10px;
-margin-top:30px;
-box-shadow:0 5px 20px rgba(0,0,0,0.5);
-}
-.flame{
-position:absolute;
-top:-25px;left:50%;
-transform:translateX(-50%);
-width:20px;height:30px;
-background:orange;
-border-radius:50% 50% 20% 20%;
-filter:blur(3px);
-animation:flameFlicker 1s infinite;
-cursor:pointer;
-}
-@keyframes flameFlicker{
-0%{transform:translateX(-50%) scale(1);}
-50%{transform:translateX(-52%) scale(1.1);}
-100%{transform:translateX(-50%) scale(1);}
-}
+#candle {width:40px; height:120px; background:#222; border-radius:10px; margin:20px 0; position:relative;}
+.flame {position:absolute; top:-25px; left:50%; transform:translateX(-50%); width:20px; height:30px; background:orange; border-radius:50% 50% 20% 20%; filter:blur(3px); animation:flameFlicker 1s infinite;}
 
 /* Floating hearts */
-.heart{
-position:absolute;
-bottom:-10px;
-font-size:22px;
-animation:rise 6s linear infinite;
-opacity:0.7;
-}
-@keyframes rise{
-to{transform:translateY(-110vh) rotate(360deg);opacity:0;}
-}
+.heart {position:absolute; font-size:28px; opacity:0.8; animation:rise 6s linear forwards;}
+@keyframes rise {to{transform:translateY(-110vh) rotate(360deg); opacity:0;}}
+
+/* Sparkles */
+.sparkle {position:absolute; width:4px; height:4px; border-radius:50%; background:white; opacity:0.8; animation:sparkleMove 5s linear infinite;}
+@keyframes sparkleMove {0%{transform:translate(0,0);}100%{transform:translate(100vw,-100vh); opacity:0;}}
+
+button:active {transform:scale(0.95);}
 </style>
 </head>
 <body>
 
-<div id="loading">
-Loading Images...
-<span id="progress">0%</span>
-</div>
+<!-- Background slideshow -->
+<div id="bg-slideshow"></div>
 
+<!-- Intro -->
 <div id="intro">
 <h1>🎧 Before You Begin…</h1>
 <p>1. Please wear your <strong>headphones or earpods</strong> to enjoy the music and effects.</p>
@@ -199,123 +136,100 @@ Love you both forever! ❤️
 <button id="proceedBtn">Proceed to Celebration 🎉</button>
 </div>
 
+<!-- Main overlay container -->
 <div class="container" id="main">
-
 <div class="slideshow-container">
 <img id="slideshow" src="mumimages/mum1.jpg.jpeg">
-<div id="slideshow-glow"></div>
-</div>
-
+<div class="overlay-text">
 <p>Wishing you both endless joy, love, and blessings. Your faith and love inspire everyone around you. ❤️</p>
-
 <div id="verse"></div>
-
-<div id="candle">
-<div class="flame"></div>
-</div>
-
+<div id="candle"><div class="flame"></div></div>
 <button onclick="revealMessage()">Click for a Special Message</button>
-
-<div class="hidden-message" id="special">
-<p>Thank you for your love, guidance, and faith. May this year be full of happiness, growth, and countless blessings. Love you both forever. ❤️</p>
+<div id="special"><p>Thank you for your love, guidance, and faith. May this year be full of happiness, growth, and countless blessings. Love you both forever. ❤️</p></div>
+</div>
+</div>
 </div>
 
-</div>
-
+<!-- Music -->
 <audio id="bgMusic" loop>
 <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-
-/* FIXED IMAGE EXTENSION */
+// Images
 const pics=[];
-for(let j=1;j<=76;j++){
-pics.push(`mumimages/mum${j}.jpg.jpeg`);
-}
+for(let j=1;j<=76;j++){ pics.push(`mumimages/mum${j}.jpg.jpeg`); }
 
-const loadingScreen=document.getElementById('loading');
-const progressText=document.getElementById('progress');
-const proceedBtn=document.getElementById('proceedBtn');
-const bgMusic=document.getElementById('bgMusic');
-const slide=document.getElementById("slideshow");
-
-/* Preload */
-function preloadImages(images,callback){
-let loaded=0;
-images.forEach(src=>{
-const img=new Image();
-img.src=src;
-img.onload=img.onerror=()=>{
-loaded++;
-progressText.textContent=Math.floor(loaded/images.length*100)+"%";
-if(loaded===images.length)callback();
-};
+// Background slides
+const bgContainer = document.getElementById('bg-slideshow');
+pics.forEach(src=>{
+    const img=document.createElement('img');
+    img.src=src;
+    img.classList.add('bg-slide');
+    bgContainer.appendChild(img);
 });
-}
+const bgSlides=document.querySelectorAll('.bg-slide');
+let bgIndex=0;
+function nextBgSlide(){bgSlides.forEach(s=>s.style.opacity=0); bgSlides[bgIndex].style.opacity=1; bgIndex=(bgIndex+1)%bgSlides.length;}
+setInterval(nextBgSlide,4000);
+nextBgSlide();
 
-/* Slideshow smoother + faster */
+// Intro elements
+const intro = document.getElementById('intro');
+const proceedBtn = document.getElementById('proceedBtn');
+const main = document.getElementById('main');
+const bgMusic = document.getElementById('bgMusic');
+
+// Slideshow inside container
+const slideImg = document.getElementById('slideshow');
 let current=0;
-function startSlideshow(){
-setInterval(()=>{
-slide.style.opacity=0;
-setTimeout(()=>{
-current=(current+1)%pics.length;
-slide.src=pics[current];
-slide.style.opacity=1;
-},800);
-},4000);
+function nextSlide(){current=(current+1)%pics.length; slideImg.style.opacity=0; setTimeout(()=>{slideImg.src=pics[current]; slideImg.style.opacity=1;},500);}
+setInterval(nextSlide,3000);
+
+// Floating hearts on click
+document.body.addEventListener('click', e=>{
+    const heart=document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.left=e.clientX+'px';
+    heart.style.top=e.clientY+'px';
+    const colors=['#ff3b3b','#3b9eff','#000000'];
+    heart.style.color=colors[Math.floor(Math.random()*colors.length)];
+    heart.style.fontSize=25 + Math.random()*20 +'px';
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+});
+
+// Sparkles
+for(let i=0;i<30;i++){
+    const s=document.createElement('div');
+    s.classList.add('sparkle');
+    s.style.left=Math.random()*100+'vw';
+    s.style.top=Math.random()*100+'vh';
+    s.style.animationDuration=(3+Math.random()*4)+'s';
+    document.body.appendChild(s);
 }
 
-/* Floating hearts */
-setInterval(()=>{
-const heart=document.createElement("div");
-heart.classList.add("heart");
-heart.style.left=Math.random()*100+"vw";
-heart.innerHTML="💗";
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),6000);
-},800);
-
-/* Bible verse */
-const verses=[
+// Bible verses
+const verses = [
 "Proverbs 31:25 - She is clothed with strength and dignity, and she laughs without fear of the future.",
 "Philippians 4:13 - I can do all things through Christ who strengthens me.",
 "Psalm 28:7 - The Lord is my strength and my shield; my heart trusts in him, and I am helped.",
 "1 Corinthians 13:4 - Love is patient, love is kind; it does not envy or boast; it is not proud."
 ];
 let verseIndex=0;
-function showVerse(){
-const v=document.getElementById("verse");
-v.style.opacity=0;
-setTimeout(()=>{
-v.innerHTML=verses[verseIndex];
-v.style.opacity=1;
-verseIndex=(verseIndex+1)%verses.length;
-},800);
-}
-setInterval(showVerse,6000);
+function showVerse(){const v=document.getElementById("verse"); v.style.opacity=0; setTimeout(()=>{v.innerHTML=verses[verseIndex]; v.style.opacity=1; verseIndex=(verseIndex+1)%verses.length;},500);}
+setInterval(showVerse,5000);
 showVerse();
 
-/* Reveal */
-function revealMessage(){
-document.getElementById("special").classList.add("show");
-}
+// Reveal message
+function revealMessage(){document.getElementById('special').classList.add('show');}
 
-/* Load then show */
-preloadImages(pics,()=>{
-loadingScreen.style.display='none';
+// Proceed button
+proceedBtn.addEventListener('click', ()=>{
+    intro.classList.add('fade-out');
+    bgMusic.play().catch(()=>{});
+    setTimeout(()=>{main.classList.add('show');},500);
 });
-
-proceedBtn.addEventListener('click',()=>{
-document.getElementById('intro').classList.add('fade-out');
-bgMusic.play().catch(()=>{});
-setTimeout(()=>{
-document.getElementById('main').classList.add('show');
-startSlideshow();
-},1000);
-});
-
 </script>
 </body>
 </html>
