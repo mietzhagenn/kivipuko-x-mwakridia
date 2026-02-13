@@ -6,31 +6,24 @@
 <title>Kivipuko & Mwakridia ❤️ Birthday Celebration</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
-/* Global Styles */
+/* Reset */
 * {margin:0;padding:0;box-sizing:border-box;}
 body, html {
     width:100%; height:100%; overflow:hidden;
     font-family:'Playfair Display', serif;
-    background:#111;
-    color:#fff;
+    background:#111; color:#fff;
+    position:relative;
 }
 
-/* Background slideshow container */
+/* Background slideshow */
 #bg-slideshow {
-    position:fixed;
-    top:0; left:0; width:100%; height:100%;
-    z-index:-100;
-    overflow:hidden;
+    position:fixed; top:0; left:0; width:100%; height:100%;
+    z-index:-100; overflow:hidden;
 }
 .bg-slide {
-    position:absolute;
-    top:0; left:0;
-    width:100%; height:100%;
-    object-fit:cover;
-    opacity:0;
-    transition:opacity 1s ease;
-    filter: brightness(0.5);
-    transform: scale(1.05);
+    position:absolute; top:0; left:0; width:100%; height:100%;
+    object-fit:cover; opacity:0; transition:opacity 1s ease;
+    filter: brightness(0.5); transform: scale(1.05);
 }
 
 /* Intro Overlay */
@@ -46,49 +39,41 @@ body, html {
 #intro h1 {font-size:3rem; margin-bottom:15px; color:#fff; text-shadow:0 0 15px rgba(255,255,255,0.7);}
 #intro p {font-size:1.2rem; margin:8px 0; line-height:1.6;}
 #intro button {
-    margin-top:20px; padding:12px 30px;
-    border-radius:25px; border:none;
-    background:#fff; color:#6a5acd; font-weight:bold;
-    cursor:pointer;
-    transition:0.2s;
+    margin-top:20px; padding:12px 30px; border-radius:25px;
+    border:none; background:#fff; color:#6a5acd; font-weight:bold;
+    cursor:pointer; transition:0.2s;
 }
 #intro button:active {transform:scale(0.95);}
 
-/* Main container text overlay */
+/* Container for scrolling message */
 .container {
-    position:fixed; top:0; left:0;
-    width:100%; height:100%;
-    display:flex; flex-direction:column; justify-content:center; align-items:center;
-    text-align:center; padding:20px;
-    color:white;
-    pointer-events:none;
+    position:fixed; top:0; left:0; width:100%; height:100%;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    align-items:center; pointer-events:none;
 }
 .container.show {pointer-events:auto;}
 
 /* Slideshow frame */
 .slideshow-container {
-    width:90vw; max-width:400px;
-    height:90vw; max-height:400px;
-    overflow:hidden; border-radius:20px;
-    margin-bottom:20px; position:relative;
+    width:90vw; max-width:400px; height:90vw; max-height:400px;
+    overflow:hidden; border-radius:20px; margin-bottom:20px; position:relative;
 }
 #slideshow {
-    width:100%; height:100%;
-    object-fit:cover;
-    border-radius:20px;
-    box-shadow:0 10px 40px rgba(0,0,0,0.5);
+    width:100%; height:100%; object-fit:cover;
+    border-radius:20px; box-shadow:0 10px 40px rgba(0,0,0,0.5);
     transition:opacity 0.8s ease;
 }
 
-/* Text overlay */
-.overlay-text {
-    position:absolute; top:0; left:0; width:100%; height:100%;
-    display:flex; flex-direction:column; justify-content:center; align-items:center;
-    padding:20px;
-    backdrop-filter: blur(3px);
-    text-shadow: 0 0 15px rgba(0,0,0,0.7);
-    font-size:1.1rem; line-height:1.6; overflow-y:auto;
-    max-height:100%;
+/* Scrolling message overlay */
+.scroll-message {
+    position:absolute; bottom:0; left:0; width:100%;
+    max-height:50%; padding:20px;
+    overflow:hidden; text-align:center;
+    backdrop-filter:blur(4px); text-shadow:0 0 15px rgba(0,0,0,0.7);
+    font-size:1.1rem; line-height:1.6;
+}
+.scroll-content {
+    position:relative; bottom:0;
 }
 
 /* Special message */
@@ -109,7 +94,6 @@ body, html {
 /* Sparkles */
 .sparkle {position:absolute; width:4px; height:4px; border-radius:50%; background:white; opacity:0.8; animation:sparkleMove 5s linear infinite;}
 @keyframes sparkleMove {0%{transform:translate(0,0);}100%{transform:translate(100vw,-100vh); opacity:0;}}
-
 button:active {transform:scale(0.95);}
 </style>
 </head>
@@ -140,12 +124,18 @@ Love you both forever! ❤️
 <div class="container" id="main">
 <div class="slideshow-container">
 <img id="slideshow" src="mumimages/mum1.jpg.jpeg">
-<div class="overlay-text">
-<p>Wishing you both endless joy, love, and blessings. Your faith and love inspire everyone around you. ❤️</p>
+<div class="scroll-message">
+<div class="scroll-content" id="scrollContent">
+<p>
+Wishing you both endless joy, love, and blessings. Your faith and love inspire everyone around you. ❤️<br>
+May this year be filled with laughter, growth, adventure, and countless blessings. Remember to enjoy every moment and cherish each other. Keep shining bright! 🌟❤️<br>
+Thank you for being amazing parents and wonderful humans. Your love and care make the world better. 💖
+</p>
 <div id="verse"></div>
 <div id="candle"><div class="flame"></div></div>
 <button onclick="revealMessage()">Click for a Special Message</button>
 <div id="special"><p>Thank you for your love, guidance, and faith. May this year be full of happiness, growth, and countless blessings. Love you both forever. ❤️</p></div>
+</div>
 </div>
 </div>
 </div>
@@ -164,8 +154,7 @@ for(let j=1;j<=76;j++){ pics.push(`mumimages/mum${j}.jpg.jpeg`); }
 const bgContainer = document.getElementById('bg-slideshow');
 pics.forEach(src=>{
     const img=document.createElement('img');
-    img.src=src;
-    img.classList.add('bg-slide');
+    img.src=src; img.classList.add('bg-slide');
     bgContainer.appendChild(img);
 });
 const bgSlides=document.querySelectorAll('.bg-slide');
@@ -174,19 +163,20 @@ function nextBgSlide(){bgSlides.forEach(s=>s.style.opacity=0); bgSlides[bgIndex]
 setInterval(nextBgSlide,4000);
 nextBgSlide();
 
-// Intro elements
+// DOM elements
 const intro = document.getElementById('intro');
 const proceedBtn = document.getElementById('proceedBtn');
 const main = document.getElementById('main');
 const bgMusic = document.getElementById('bgMusic');
-
-// Slideshow inside container
 const slideImg = document.getElementById('slideshow');
+const scrollContent = document.getElementById('scrollContent');
+
+// Slideshow
 let current=0;
-function nextSlide(){current=(current+1)%pics.length; slideImg.style.opacity=0; setTimeout(()=>{slideImg.src=pics[current]; slideImg.style.opacity=1;},500);}
+function nextSlide(){current=(current+1)%pics.length; slideImg.style.opacity=0; setTimeout(()=>{slideImg.src=pics[current]; slideImg.style.opacity=1;},400);}
 setInterval(nextSlide,3000);
 
-// Floating hearts on click
+// Floating hearts
 document.body.addEventListener('click', e=>{
     const heart=document.createElement('div');
     heart.classList.add('heart');
@@ -217,17 +207,30 @@ const verses = [
 "1 Corinthians 13:4 - Love is patient, love is kind; it does not envy or boast; it is not proud."
 ];
 let verseIndex=0;
-function showVerse(){const v=document.getElementById("verse"); v.style.opacity=0; setTimeout(()=>{v.innerHTML=verses[verseIndex]; v.style.opacity=1; verseIndex=(verseIndex+1)%verses.length;},500);}
+function showVerse(){
+    const v=document.getElementById("verse");
+    v.style.opacity=0;
+    setTimeout(()=>{v.innerHTML=verses[verseIndex]; v.style.opacity=1; verseIndex=(verseIndex+1)%verses.length;},500);
+}
 setInterval(showVerse,5000);
 showVerse();
 
 // Reveal message
 function revealMessage(){document.getElementById('special').classList.add('show');}
 
+// Auto-scroll the long message
+let scrollPos=0;
+function scrollMessage(){
+    scrollPos+=0.3; // scroll speed
+    scrollContent.style.transform=`translateY(-${scrollPos}px)`;
+    if(scrollPos > scrollContent.scrollHeight) scrollPos=0;
+}
+setInterval(scrollMessage,50);
+
 // Proceed button
 proceedBtn.addEventListener('click', ()=>{
     intro.classList.add('fade-out');
-    bgMusic.play().catch(()=>{});
+    bgMusic.play().catch(()=>{}); // required for mobile autoplay after click
     setTimeout(()=>{main.classList.add('show');},500);
 });
 </script>
