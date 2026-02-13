@@ -3,208 +3,221 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kivipuko & Mwakridia ❤️ Birthday Celebration</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+<title>Special Message</title>
+
+<!-- Aesthetic Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
-/* Global Styles */
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif;}
-body, html {
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    position:relative;
-    color:#fff;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-/* Background slideshow images */
-.bg-slide {
-    position:fixed;
-    top:0; left:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:-2;
-    opacity:0;
-    transition:opacity 1s ease-in-out;
+body{
+font-family:'Poppins',sans-serif;
+overflow:hidden;
+height:100vh;
+background:black;
+color:white;
 }
 
-/* Dark overlay to make text readable */
-#overlay {
-    position:fixed;
-    top:0; left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.35);
-    z-index:-1;
+/* Background Slideshow */
+.background{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-2;
+background-size:cover;
+background-position:center;
+animation:zoom 12s infinite alternate ease-in-out;
+transition:background-image 1s ease-in-out;
 }
 
-/* Intro Overlay */
-#intro {
-    position: fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background: rgba(0,0,0,0.95);
-    color: #fff;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    z-index: 100;
-    padding:20px;
-    text-align:center;
-    overflow-y:auto;
-}
-#intro h1 { font-size: clamp(2rem,5vw,3rem); margin-bottom:15px; color:#fff; text-shadow:0 0 15px rgba(255,255,255,0.7);}
-#intro p { font-size: clamp(0.9rem,2.5vw,1.2rem); margin:8px 0; line-height:1.4;}
-#intro button {
-    margin-top:20px;
-    padding:15px 30px;
-    border-radius:25px;
-    border:none;
-    background:white;
-    color:#6a5acd;
-    font-weight:bold;
-    font-size:1rem;
-    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+@keyframes zoom{
+0%{transform:scale(1);}
+100%{transform:scale(1.08);}
 }
 
-/* Fade out overlay */
-#intro.fade-out {opacity:0; pointer-events:none; transition:opacity 1s ease;}
-
-/* Message Overlay */
-#messageOverlay {
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    text-align:center;
-    max-width:90vw;
-    background: rgba(0,0,0,0.4);
-    padding:25px;
-    border-radius:20px;
-    font-size:1rem;
-    line-height:1.6;
-    z-index:10;
-    color:#fff;
-    box-shadow:0 10px 40px rgba(0,0,0,0.4);
+/* Dark overlay */
+.overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.45);
+z-index:-1;
 }
 
-/* Button for special message */
-button#specialButton {
-    margin-top:20px;
-    padding:12px 25px;
-    border-radius:20px;
-    border:none;
-    background:#fff;
-    color:#6a5acd;
-    font-weight:bold;
-    cursor:pointer;
-    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+/* Glowing vignette */
+.vignette{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+box-shadow:inset 0 0 120px rgba(255,0,80,0.5);
+animation:vibe 6s infinite alternate ease-in-out;
 }
 
-/* Special message */
-.hidden-message {
-    margin-top:20px;
-    opacity:0;
-    max-height:0;
-    overflow:hidden;
-    transition: opacity 1s, max-height 1s ease;
-    font-size:0.95rem;
-}
-.hidden-message.show {
-    opacity:1;
-    max-height:600px;
+@keyframes vibe{
+0%{box-shadow:inset 0 0 120px rgba(255,0,80,0.4);}
+100%{box-shadow:inset 0 0 150px rgba(0,150,255,0.5);}
 }
 
-/* Floating hearts */
-.heart {position:absolute; bottom:-10px; font-size:20px; animation:rise 6s linear infinite; opacity:0.7; transform-origin:center;}
-@keyframes rise {to{transform:translateY(-110vh) rotate(360deg);opacity:0;}}
+/* Center Content */
+.container{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+width:90%;
+max-width:500px;
+}
+
+/* Message Text */
+.message{
+font-family:'Playfair Display',serif;
+font-size:1.6rem;
+line-height:1.6;
+opacity:0;
+transition:opacity 1.2s ease;
+}
+
+/* Button */
+button{
+margin-top:30px;
+padding:14px 30px;
+border:none;
+border-radius:50px;
+font-size:1rem;
+background:linear-gradient(135deg,#ff4e8a,#6a5cff);
+color:white;
+cursor:pointer;
+transition:all 0.3s ease;
+box-shadow:0 0 20px rgba(255,0,100,0.5);
+}
+
+button:active{
+transform:scale(0.95);
+box-shadow:0 0 30px rgba(255,0,100,0.9);
+}
+
+/* Floating Hearts */
+.heart{
+position:absolute;
+font-size:28px;
+animation:float 4s linear forwards;
+}
+
+@keyframes float{
+0%{transform:translateY(0) scale(1);opacity:1;}
+100%{transform:translateY(-250px) scale(1.8);opacity:0;}
+}
+
+/* Sparkles */
+.sparkle{
+position:absolute;
+width:4px;
+height:4px;
+background:white;
+border-radius:50%;
+opacity:0.7;
+animation:spark 6s infinite ease-in-out;
+}
+
+@keyframes spark{
+0%{opacity:0.2;transform:translateY(0);}
+50%{opacity:1;transform:translateY(-20px);}
+100%{opacity:0.2;transform:translateY(0);}
+}
 </style>
 </head>
+
 <body>
 
-<!-- Background slides -->
-<div id="overlay"></div>
+<div class="background" id="bg"></div>
+<div class="overlay"></div>
+<div class="vignette"></div>
 
-<!-- Intro Overlay -->
-<div id="intro">
-    <h1>🎧 Before You Begin…</h1>
-    <p>1. Please wear your <strong>headphones or earpods</strong> to enjoy the music and effects.</p>
-    <p>2. Take a deep breath, relax, and get ready to celebrate.</p>
-    <button onclick="startCelebration()">Proceed to Celebration 🎉</button>
+<div class="container">
+<div class="message" id="message">
+You are something rare.<br>
+Something calm.<br>
+Something unforgettable.
 </div>
 
-<!-- Message Overlay -->
-<div id="messageOverlay">
-    <p>
-        Hello, loved ones… the special people of the world.<br>
-        Today is a celebration of those who are special — special to Mummy, special to Babuu, special to Mr. Billy, and special to Honourable Bradley himself.<br>
-        Breathe in and remind every cell in your body that you are alive! 😍❤️<br>
-        Look up. The only people you need to prove yourselves to are <strong>yourselves</strong>.<br>
-        God created you to live a life that makes <strong>YOU</strong> happy. If it brings joy, it’s worth it.<br>
-        Together, you can take on the world. Give yourselves the chance to breathe, grow, and enjoy life.<br>
-        Kivipuko and Mwakridia… muache kula sana… kwanza Kivipuko afunge momu kukelala… bahaha 😅<br>
-        Love you both forever! ❤️
-    </p>
-    <button id="specialButton" onclick="revealMessage()">Click for a Special Message</button>
-    <div class="hidden-message" id="special">
-        <p>Thank you for your love, guidance, and faith. May this year be full of happiness, growth, and countless blessings. Love you both forever. ❤️</p>
-    </div>
+<button onclick="reveal()">Click for Special Message</button>
 </div>
 
-<!-- Audio -->
-<audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mpeg">
+<!-- Background Music -->
+<audio id="bgMusic" loop autoplay>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Pop sound -->
+<audio id="popSound">
+<source src="https://assets.mixkit.co/sfx/preview/mixkit-bubble-pop-up-alert-notification-2357.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-// Slideshow background
-const pics = [];
-for(let i=1;i<=76;i++){ pics.push(`mumimages/mum${i}.jpg.jpeg`);}
-let current=0;
-const bgImages = [];
-pics.forEach(src=>{
-    const img = document.createElement("img");
-    img.src = src;
-    img.classList.add("bg-slide");
-    document.body.appendChild(img);
-    bgImages.push(img);
+const images=[
+"image1.jpg",
+"image2.jpg",
+"image3.jpg",
+"image4.jpg"
+];
+
+let index=0;
+const bg=document.getElementById("bg");
+
+function changeBackground(){
+bg.style.backgroundImage=`url('${images[index]}')`;
+index=(index+1)%images.length;
+}
+changeBackground();
+setInterval(changeBackground,4000); // faster switching
+
+function reveal(){
+document.getElementById("message").style.opacity=1;
+document.querySelector("button").style.display="none";
+}
+
+/* Interactive Hearts */
+document.addEventListener("click",function(e){
+
+const heart=document.createElement("div");
+heart.classList.add("heart");
+
+const colors=["❤️","💙","🖤"];
+heart.innerHTML=colors[Math.floor(Math.random()*colors.length)];
+
+heart.style.left=e.clientX+"px";
+heart.style.top=e.clientY+"px";
+
+document.body.appendChild(heart);
+
+document.getElementById("popSound").currentTime=0;
+document.getElementById("popSound").play();
+
+setTimeout(()=>{heart.remove();},4000);
 });
-bgImages[0].style.opacity = 1;
 
-// Slideshow interval (faster now)
-setInterval(()=>{
-    const next = (current+1) % bgImages.length;
-    bgImages[current].style.opacity = 0;
-    bgImages[next].style.opacity = 1;
-    current = next;
-},3500); // 3.5 seconds per image
-
-// Intro overlay
-function startCelebration(){
-    document.getElementById('intro').classList.add('fade-out');
-    setTimeout(()=>{
-        document.getElementById('bgMusic').play();
-    },1000);
+/* Sparkles */
+for(let i=0;i<40;i++){
+let s=document.createElement("div");
+s.classList.add("sparkle");
+s.style.left=Math.random()*100+"%";
+s.style.top=Math.random()*100+"%";
+s.style.animationDuration=4+Math.random()*6+"s";
+document.body.appendChild(s);
 }
-
-// Special message reveal
-function revealMessage(){
-    document.getElementById("special").classList.add("show");
-}
-
-// Floating hearts
-setInterval(() => {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.style.left = Math.random()*100 + "vw";
-    heart.style.fontSize = 15 + Math.random()*15 + "px";
-    heart.innerHTML="💗";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),6000);
-},600);
 </script>
 
 </body>
