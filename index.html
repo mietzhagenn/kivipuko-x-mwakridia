@@ -3,257 +3,319 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Mum ❤️</title>
-
-<!-- Elegant Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Great+Vibes&display=swap" rel="stylesheet">
+<title>Kivipuko & Mwakridia ❤️ Birthday Celebration</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 
-html,body{
-margin:0;
-padding:0;
-overflow:hidden;
-font-family:'Playfair Display',serif;
-background:black;
-color:white;
-height:100%;
-}
-
-/* Background slideshow */
-.bg{
-position:fixed;
-top:0;
-left:0;
+body,html{
 width:100%;
 height:100%;
-background-size:cover;
-background-position:center;
-transition:opacity 1s ease-in-out;
-opacity:0;
-z-index:-2;
+overflow:hidden;
+background:linear-gradient(135deg,#e0eafc,#cfdef3);
+color:#333;
+display:flex;
+justify-content:center;
+align-items:center;
+transition:background 2s;
 }
 
-/* Vignette Glow */
+/* Soft glowing vignette */
 body::after{
 content:"";
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:radial-gradient(circle at center,
-rgba(0,0,0,0) 50%,
-rgba(0,0,0,0.7) 100%);
+top:0;left:0;
+width:100%;height:100%;
 pointer-events:none;
-z-index:-1;
+box-shadow:inset 0 0 120px rgba(0,0,0,0.4);
 }
 
-/* Content */
-.container{
-position:relative;
-height:100vh;
+/* Buttons */
+button{cursor:pointer;transition:0.3s;}
+button:active{transform:scale(0.95);}
+
+/* Intro */
+#intro{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.95);
+color:#fff;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
+z-index:200;
+padding:20px;
 text-align:center;
-padding:40px;
 overflow-y:auto;
 }
 
-h1{
-font-family:'Great Vibes',cursive;
-font-size:60px;
+#intro.fade-out{opacity:0;pointer-events:none;transition:opacity 1s ease;}
+
+#intro button{
+margin-top:20px;
+padding:12px 30px;
+border-radius:25px;
+border:none;
+background:white;
+color:#6a5acd;
+font-weight:bold;
+}
+
+/* Loading */
+#loading{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.9);
+color:white;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:300;
+font-size:1.5rem;
+}
+
+/* Main container */
+.container{
+position:relative;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+padding:40px;
+max-width:800px;
+margin:auto;
+text-align:center;
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(18px);
+border-radius:30px;
+box-shadow:0 20px 60px rgba(0,0,0,0.25);
+opacity:0;
+transition:opacity 2s;
+}
+.container.show{opacity:1;}
+
+h1.main-title{font-size:2.5rem;margin-bottom:10px;}
+
+.slideshow-container{
+position:relative;
+width:250px;height:250px;
 margin-bottom:20px;
 }
 
-p{
-max-width:800px;
-font-size:20px;
-line-height:1.6;
-}
-
-button{
-margin-top:25px;
-padding:15px 30px;
-font-size:18px;
-border:none;
-border-radius:30px;
-background:linear-gradient(45deg,#ff4e50,#fc913a);
-color:white;
-cursor:pointer;
-transition:0.3s;
-}
-
-button:hover{
-transform:scale(1.05);
-}
-
-button:active{
-transform:scale(0.95);
-}
-
-/* Hearts */
-.heart{
-position:fixed;
-font-size:45px;
-pointer-events:none;
-animation:floatUp 6s cubic-bezier(.22,.61,.36,1) forwards;
-filter:drop-shadow(0 8px 15px rgba(0,0,0,0.4));
-}
-
-@keyframes floatUp{
-0%{transform:translateY(0) scale(0.8);opacity:0;}
-15%{opacity:1;}
-100%{transform:translateY(-120vh) scale(1.2);opacity:0;}
-}
-
-/* Sparkles */
-.sparkle{
-position:fixed;
-width:4px;
-height:4px;
-background:white;
+#slideshow{
+width:100%;height:100%;
 border-radius:50%;
-opacity:0.8;
-animation:sparkleFloat 8s linear infinite;
+border:4px solid white;
+box-shadow:0 10px 40px rgba(0,0,0,0.4);
+object-fit:cover;
+position:absolute;
+top:0;left:0;
+opacity:1;
+transition:opacity 1s ease;
+}
+
+#slideshow-glow{
+position:absolute;
+top:-10px;left:-10px;
+width:270px;height:270px;
+border-radius:50%;
+box-shadow:0 0 80px 15px rgba(255,255,255,0.4);
 pointer-events:none;
+z-index:-1;
 }
 
-@keyframes sparkleFloat{
-0%{transform:translateY(0);opacity:0;}
-20%{opacity:1;}
-100%{transform:translateY(-100vh);opacity:0;}
+p{line-height:1.6;margin:10px auto;max-width:700px;font-size:1.1rem;}
+
+.hidden-message{margin-top:20px;opacity:0;transition:opacity 1s;}
+.hidden-message.show{opacity:1;}
+
+#verse{margin-top:20px;font-style:italic;font-size:1.1rem;opacity:0;transition:opacity 2s;}
+
+/* Candle */
+#candle{
+position:relative;
+width:40px;height:120px;
+background:#222;
+border-radius:10px;
+margin-top:30px;
+box-shadow:0 5px 20px rgba(0,0,0,0.5);
+}
+.flame{
+position:absolute;
+top:-25px;left:50%;
+transform:translateX(-50%);
+width:20px;height:30px;
+background:orange;
+border-radius:50% 50% 20% 20%;
+filter:blur(3px);
+animation:flameFlicker 1s infinite;
+cursor:pointer;
+}
+@keyframes flameFlicker{
+0%{transform:translateX(-50%) scale(1);}
+50%{transform:translateX(-52%) scale(1.1);}
+100%{transform:translateX(-50%) scale(1);}
 }
 
+/* Floating hearts */
+.heart{
+position:absolute;
+bottom:-10px;
+font-size:22px;
+animation:rise 6s linear infinite;
+opacity:0.7;
+}
+@keyframes rise{
+to{transform:translateY(-110vh) rotate(360deg);opacity:0;}
+}
 </style>
 </head>
 <body>
+
+<div id="loading">
+Loading Images...
+<span id="progress">0%</span>
+</div>
+
+<div id="intro">
+<h1>🎧 Before You Begin…</h1>
+<p>1. Please wear your <strong>headphones or earpods</strong> to enjoy the music and effects.</p>
+<p>2. Take a deep breath, relax, and get ready to celebrate.</p>
+<p>
+Hello, loved ones… the special people of the world.<br>
+Today is a celebration of those who are special — special to Mummy, special to Babuu, special to Mr. Billy, and special to Honourable Bradley himself.<br>
+Breathe in and remind every cell in your body that you are alive! 😍❤️<br>
+Look up. The only people you need to prove yourselves to are <strong>yourselves</strong>.<br>
+God created you to live a life that makes <strong>YOU</strong> happy. If it brings joy, it’s worth it.<br>
+Together, you can take on the world. Give yourselves the chance to breathe, grow, and enjoy life.<br>
+Kivipuko and Mwakridia… muache kula sana… kwanza Kivipuko afunge momu kukelala… bahaha 😅<br>
+Love you both forever! ❤️
+</p>
+<button id="proceedBtn">Proceed to Celebration 🎉</button>
+</div>
+
+<div class="container" id="main">
+
+<div class="slideshow-container">
+<img id="slideshow" src="mumimages/mum1.jpg.jpeg">
+<div id="slideshow-glow"></div>
+</div>
+
+<p>Wishing you both endless joy, love, and blessings. Your faith and love inspire everyone around you. ❤️</p>
+
+<div id="verse"></div>
+
+<div id="candle">
+<div class="flame"></div>
+</div>
+
+<button onclick="revealMessage()">Click for a Special Message</button>
+
+<div class="hidden-message" id="special">
+<p>Thank you for your love, guidance, and faith. May this year be full of happiness, growth, and countless blessings. Love you both forever. ❤️</p>
+</div>
+
+</div>
 
 <audio id="bgMusic" loop>
 <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<div id="slideshow"></div>
-
-<div class="container">
-<h1>Happy Birthday Mum ❤️</h1>
-
-<p>
-From the very beginning, you have been my strength, my protector,
-my teacher, and my heart.  
-Every sacrifice you made built the person I am today.  
-This small space on the internet is just a reflection  
-of the massive love I carry for you.  
-May your days be filled with peace, health,  
-and the same warmth you have always given me.
-</p>
-
-<button onclick="pulseButton(this)">
-Tap Anywhere ❤️
-</button>
-</div>
-
 <script>
 
-/* ---------------------------
-   AUTO LOAD 76 IMAGES
-----------------------------*/
-const totalImages = 76;
-const slideshow = document.getElementById("slideshow");
-let current = 0;
-const bgElements = [];
-
-for(let i=1;i<=totalImages;i++){
-let div=document.createElement("div");
-div.className="bg";
-div.style.backgroundImage=`url('mumimages/mum${i}.jpg.jpeg')`;
-slideshow.appendChild(div);
-bgElements.push(div);
+/* FIXED IMAGE EXTENSION */
+const pics=[];
+for(let j=1;j<=76;j++){
+pics.push(`mumimages/mum${j}.jpg.jpeg`);
 }
 
-function showSlide(index){
-bgElements.forEach((img,i)=>{
-img.style.opacity=(i===index)?1:0;
+const loadingScreen=document.getElementById('loading');
+const progressText=document.getElementById('progress');
+const proceedBtn=document.getElementById('proceedBtn');
+const bgMusic=document.getElementById('bgMusic');
+const slide=document.getElementById("slideshow");
+
+/* Preload */
+function preloadImages(images,callback){
+let loaded=0;
+images.forEach(src=>{
+const img=new Image();
+img.src=src;
+img.onload=img.onerror=()=>{
+loaded++;
+progressText.textContent=Math.floor(loaded/images.length*100)+"%";
+if(loaded===images.length)callback();
+};
 });
 }
 
-function nextSlide(){
-current=(current+1)%totalImages;
-showSlide(current);
-}
-
-showSlide(0);
-setInterval(nextSlide,3000); // Faster switching
-
-
-/* ---------------------------
-   PARALLAX
-----------------------------*/
-document.addEventListener("mousemove",function(e){
-const x=(window.innerWidth/2-e.clientX)/50;
-const y=(window.innerHeight/2-e.clientY)/50;
-bgElements.forEach(img=>{
-img.style.transform=`scale(1.05) translate(${x}px,${y}px)`;
-});
-});
-
-
-/* ---------------------------
-   HEART SPAWN
-----------------------------*/
-const heartColors=["❤️","💙","🖤"];
-
-function spawnHeart(x,y){
-const heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML=heartColors[Math.floor(Math.random()*3)];
-heart.style.left=x+"px";
-heart.style.top=y+"px";
-heart.style.fontSize=(35+Math.random()*30)+"px";
-document.body.appendChild(heart);
-
-setTimeout(()=>heart.remove(),6000);
-
-/* subtle sound */
-const pop=new Audio("https://assets.mixkit.co/sfx/preview/mixkit-bubble-pop-up-alert-notification-2357.mp3");
-pop.volume=0.2;
-pop.play();
-}
-
-document.addEventListener("click",function(e){
-spawnHeart(e.clientX,e.clientY);
-
-/* start music after first interaction */
-const music=document.getElementById("bgMusic");
-if(music.paused){ music.play(); }
-});
-
-
-/* ---------------------------
-   BUTTON PULSE
-----------------------------*/
-function pulseButton(btn){
-btn.style.transform="scale(1.08)";
-setTimeout(()=>btn.style.transform="scale(1)",300);
-}
-
-
-/* ---------------------------
-   SPARKLES
-----------------------------*/
+/* Slideshow smoother + faster */
+let current=0;
+function startSlideshow(){
 setInterval(()=>{
-const sparkle=document.createElement("div");
-sparkle.className="sparkle";
-sparkle.style.left=Math.random()*100+"vw";
-sparkle.style.top=Math.random()*100+"vh";
-sparkle.style.animationDuration=(6+Math.random()*4)+"s";
-document.body.appendChild(sparkle);
-setTimeout(()=>sparkle.remove(),10000);
-},300);
+slide.style.opacity=0;
+setTimeout(()=>{
+current=(current+1)%pics.length;
+slide.src=pics[current];
+slide.style.opacity=1;
+},800);
+},4000);
+}
+
+/* Floating hearts */
+setInterval(()=>{
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.style.left=Math.random()*100+"vw";
+heart.innerHTML="💗";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),6000);
+},800);
+
+/* Bible verse */
+const verses=[
+"Proverbs 31:25 - She is clothed with strength and dignity, and she laughs without fear of the future.",
+"Philippians 4:13 - I can do all things through Christ who strengthens me.",
+"Psalm 28:7 - The Lord is my strength and my shield; my heart trusts in him, and I am helped.",
+"1 Corinthians 13:4 - Love is patient, love is kind; it does not envy or boast; it is not proud."
+];
+let verseIndex=0;
+function showVerse(){
+const v=document.getElementById("verse");
+v.style.opacity=0;
+setTimeout(()=>{
+v.innerHTML=verses[verseIndex];
+v.style.opacity=1;
+verseIndex=(verseIndex+1)%verses.length;
+},800);
+}
+setInterval(showVerse,6000);
+showVerse();
+
+/* Reveal */
+function revealMessage(){
+document.getElementById("special").classList.add("show");
+}
+
+/* Load then show */
+preloadImages(pics,()=>{
+loadingScreen.style.display='none';
+});
+
+proceedBtn.addEventListener('click',()=>{
+document.getElementById('intro').classList.add('fade-out');
+bgMusic.play().catch(()=>{});
+setTimeout(()=>{
+document.getElementById('main').classList.add('show');
+startSlideshow();
+},1000);
+});
 
 </script>
-
 </body>
 </html>
