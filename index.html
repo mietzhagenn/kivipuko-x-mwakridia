@@ -3,221 +3,256 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Special Message</title>
+<title>For Mum ❤️</title>
 
-<!-- Aesthetic Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<!-- Elegant Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-*{
+
+html,body{
 margin:0;
 padding:0;
-box-sizing:border-box;
-}
-
-body{
-font-family:'Poppins',sans-serif;
 overflow:hidden;
-height:100vh;
+font-family:'Playfair Display',serif;
 background:black;
 color:white;
+height:100%;
 }
 
-/* Background Slideshow */
-.background{
+/* Background slideshow */
+.bg{
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-z-index:-2;
 background-size:cover;
 background-position:center;
-animation:zoom 12s infinite alternate ease-in-out;
-transition:background-image 1s ease-in-out;
+transition:opacity 1s ease-in-out;
+opacity:0;
+z-index:-2;
 }
 
-@keyframes zoom{
-0%{transform:scale(1);}
-100%{transform:scale(1.08);}
-}
-
-/* Dark overlay */
-.overlay{
+/* Vignette Glow */
+body::after{
+content:"";
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.45);
+background:radial-gradient(circle at center,
+rgba(0,0,0,0) 50%,
+rgba(0,0,0,0.7) 100%);
+pointer-events:none;
 z-index:-1;
 }
 
-/* Glowing vignette */
-.vignette{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-pointer-events:none;
-box-shadow:inset 0 0 120px rgba(255,0,80,0.5);
-animation:vibe 6s infinite alternate ease-in-out;
-}
-
-@keyframes vibe{
-0%{box-shadow:inset 0 0 120px rgba(255,0,80,0.4);}
-100%{box-shadow:inset 0 0 150px rgba(0,150,255,0.5);}
-}
-
-/* Center Content */
+/* Content */
 .container{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
+position:relative;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
 text-align:center;
-width:90%;
-max-width:500px;
+padding:40px;
+overflow-y:auto;
 }
 
-/* Message Text */
-.message{
-font-family:'Playfair Display',serif;
-font-size:1.6rem;
+h1{
+font-family:'Great Vibes',cursive;
+font-size:60px;
+margin-bottom:20px;
+}
+
+p{
+max-width:800px;
+font-size:20px;
 line-height:1.6;
-opacity:0;
-transition:opacity 1.2s ease;
 }
 
-/* Button */
 button{
-margin-top:30px;
-padding:14px 30px;
+margin-top:25px;
+padding:15px 30px;
+font-size:18px;
 border:none;
-border-radius:50px;
-font-size:1rem;
-background:linear-gradient(135deg,#ff4e8a,#6a5cff);
+border-radius:30px;
+background:linear-gradient(45deg,#ff4e50,#fc913a);
 color:white;
 cursor:pointer;
-transition:all 0.3s ease;
-box-shadow:0 0 20px rgba(255,0,100,0.5);
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.05);
 }
 
 button:active{
 transform:scale(0.95);
-box-shadow:0 0 30px rgba(255,0,100,0.9);
 }
 
-/* Floating Hearts */
+/* Hearts */
 .heart{
-position:absolute;
-font-size:28px;
-animation:float 4s linear forwards;
+position:fixed;
+font-size:45px;
+pointer-events:none;
+animation:floatUp 6s cubic-bezier(.22,.61,.36,1) forwards;
+filter:drop-shadow(0 8px 15px rgba(0,0,0,0.4));
 }
 
-@keyframes float{
-0%{transform:translateY(0) scale(1);opacity:1;}
-100%{transform:translateY(-250px) scale(1.8);opacity:0;}
+@keyframes floatUp{
+0%{transform:translateY(0) scale(0.8);opacity:0;}
+15%{opacity:1;}
+100%{transform:translateY(-120vh) scale(1.2);opacity:0;}
 }
 
 /* Sparkles */
 .sparkle{
-position:absolute;
+position:fixed;
 width:4px;
 height:4px;
 background:white;
 border-radius:50%;
-opacity:0.7;
-animation:spark 6s infinite ease-in-out;
+opacity:0.8;
+animation:sparkleFloat 8s linear infinite;
+pointer-events:none;
 }
 
-@keyframes spark{
-0%{opacity:0.2;transform:translateY(0);}
-50%{opacity:1;transform:translateY(-20px);}
-100%{opacity:0.2;transform:translateY(0);}
+@keyframes sparkleFloat{
+0%{transform:translateY(0);opacity:0;}
+20%{opacity:1;}
+100%{transform:translateY(-100vh);opacity:0;}
 }
+
 </style>
 </head>
-
 <body>
 
-<div class="background" id="bg"></div>
-<div class="overlay"></div>
-<div class="vignette"></div>
-
-<div class="container">
-<div class="message" id="message">
-You are something rare.<br>
-Something calm.<br>
-Something unforgettable.
-</div>
-
-<button onclick="reveal()">Click for Special Message</button>
-</div>
-
-<!-- Background Music -->
-<audio id="bgMusic" loop autoplay>
+<audio id="bgMusic" loop>
 <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Pop sound -->
-<audio id="popSound">
-<source src="https://assets.mixkit.co/sfx/preview/mixkit-bubble-pop-up-alert-notification-2357.mp3" type="audio/mpeg">
-</audio>
+<div id="slideshow"></div>
+
+<div class="container">
+<h1>Happy Birthday Mum ❤️</h1>
+
+<p>
+From the very beginning, you have been my strength, my protector,
+my teacher, and my heart.  
+Every sacrifice you made built the person I am today.  
+This small space on the internet is just a reflection  
+of the massive love I carry for you.  
+May your days be filled with peace, health,  
+and the same warmth you have always given me.
+</p>
+
+<button onclick="pulseButton(this)">
+Tap Anywhere ❤️
+</button>
+</div>
 
 <script>
-const images=[
-"image1.jpg",
-"image2.jpg",
-"image3.jpg",
-"image4.jpg"
-];
 
-let index=0;
-const bg=document.getElementById("bg");
+/* ---------------------------
+   AUTO LOAD 76 IMAGES
+----------------------------*/
+const totalImages = 76;
+const slideshow = document.getElementById("slideshow");
+let current = 0;
+const bgElements = [];
 
-function changeBackground(){
-bg.style.backgroundImage=`url('${images[index]}')`;
-index=(index+1)%images.length;
-}
-changeBackground();
-setInterval(changeBackground,4000); // faster switching
-
-function reveal(){
-document.getElementById("message").style.opacity=1;
-document.querySelector("button").style.display="none";
+for(let i=1;i<=totalImages;i++){
+let div=document.createElement("div");
+div.className="bg";
+div.style.backgroundImage=`url('mumimages/mum${i}.jpg.jpeg')`;
+slideshow.appendChild(div);
+bgElements.push(div);
 }
 
-/* Interactive Hearts */
-document.addEventListener("click",function(e){
+function showSlide(index){
+bgElements.forEach((img,i)=>{
+img.style.opacity=(i===index)?1:0;
+});
+}
 
-const heart=document.createElement("div");
-heart.classList.add("heart");
+function nextSlide(){
+current=(current+1)%totalImages;
+showSlide(current);
+}
 
-const colors=["❤️","💙","🖤"];
-heart.innerHTML=colors[Math.floor(Math.random()*colors.length)];
+showSlide(0);
+setInterval(nextSlide,3000); // Faster switching
 
-heart.style.left=e.clientX+"px";
-heart.style.top=e.clientY+"px";
 
-document.body.appendChild(heart);
-
-document.getElementById("popSound").currentTime=0;
-document.getElementById("popSound").play();
-
-setTimeout(()=>{heart.remove();},4000);
+/* ---------------------------
+   PARALLAX
+----------------------------*/
+document.addEventListener("mousemove",function(e){
+const x=(window.innerWidth/2-e.clientX)/50;
+const y=(window.innerHeight/2-e.clientY)/50;
+bgElements.forEach(img=>{
+img.style.transform=`scale(1.05) translate(${x}px,${y}px)`;
+});
 });
 
-/* Sparkles */
-for(let i=0;i<40;i++){
-let s=document.createElement("div");
-s.classList.add("sparkle");
-s.style.left=Math.random()*100+"%";
-s.style.top=Math.random()*100+"%";
-s.style.animationDuration=4+Math.random()*6+"s";
-document.body.appendChild(s);
+
+/* ---------------------------
+   HEART SPAWN
+----------------------------*/
+const heartColors=["❤️","💙","🖤"];
+
+function spawnHeart(x,y){
+const heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML=heartColors[Math.floor(Math.random()*3)];
+heart.style.left=x+"px";
+heart.style.top=y+"px";
+heart.style.fontSize=(35+Math.random()*30)+"px";
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),6000);
+
+/* subtle sound */
+const pop=new Audio("https://assets.mixkit.co/sfx/preview/mixkit-bubble-pop-up-alert-notification-2357.mp3");
+pop.volume=0.2;
+pop.play();
 }
+
+document.addEventListener("click",function(e){
+spawnHeart(e.clientX,e.clientY);
+
+/* start music after first interaction */
+const music=document.getElementById("bgMusic");
+if(music.paused){ music.play(); }
+});
+
+
+/* ---------------------------
+   BUTTON PULSE
+----------------------------*/
+function pulseButton(btn){
+btn.style.transform="scale(1.08)";
+setTimeout(()=>btn.style.transform="scale(1)",300);
+}
+
+
+/* ---------------------------
+   SPARKLES
+----------------------------*/
+setInterval(()=>{
+const sparkle=document.createElement("div");
+sparkle.className="sparkle";
+sparkle.style.left=Math.random()*100+"vw";
+sparkle.style.top=Math.random()*100+"vh";
+sparkle.style.animationDuration=(6+Math.random()*4)+"s";
+document.body.appendChild(sparkle);
+setTimeout(()=>sparkle.remove(),10000);
+},300);
+
 </script>
 
 </body>
